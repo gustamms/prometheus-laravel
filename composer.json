@@ -1,0 +1,19 @@
+{
+    "name": "gustavomendes/prometheus-laravel",
+    "description": "Lib for prometheus conector",
+    "autoload": {
+        "psr-4": {
+            "Gustavomendes\\PrometheusLaravel\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gustavo Mendes",
+            "email": "gustamms@hotmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "promphp/prometheus_client_php": "^2.7"
+    }
+}

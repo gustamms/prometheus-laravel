@@ -13,7 +13,7 @@ class PrometheusServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/prometheus.php' => $this->configPath('prometheus.php'),
         ]);
-        $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
+        // $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
         $this->loadRoutes();
     }
 

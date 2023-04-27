@@ -18,24 +18,17 @@ class PrometheusRouteMiddleware
     public function handle(Request $request, Closure $next)
     {
         $this->prometheusCollector = new PrometheusCollector();
-        $matchedRoute = $this->getMatchedRoute($request);
 
         $response = $next($request);
 
         $this->prometheusCollector->getOrRegisterCounter(
             env('PROMETHEUS_NAMESPACE', 'app'),
-            'request_made',
+            'request',
             'Request are made',
-            ['statusCode', 'uri'],
-            [$response->getStatusCode(), $matchedRoute->uri()]
+            ['uri', 'method', 'statusCode'],
+            [$request->getRequestUri(), $request->getMethod() ,$response->getStatusCode()]
         );
 
         return $response;
-    }
-
-    public function getMatchedRoute(Request $request): \Illuminate\Routing\Route
-    {
-        $routeCollection = RouteFacade::getRoutes();
-        return $routeCollection->match($request);
     }
 }

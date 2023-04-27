@@ -15,6 +15,6 @@
     "minimum-stability": "stable",
     "require": {
         "promphp/prometheus_client_php": "^2.7",
-        "illuminate/support": "^10.9"
+        "laravel/lumen": "^10.0"
     }
 }

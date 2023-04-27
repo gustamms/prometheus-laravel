@@ -4,7 +4,7 @@ namespace Gustavomendes\PrometheusLaravel\Controllers;
 
 class MetricController
 {
-    public function __invoke(): string
+    public function tested(): string
     {
         return 'Hello World';
     }

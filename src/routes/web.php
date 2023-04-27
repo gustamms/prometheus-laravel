@@ -1,6 +1,7 @@
 <?php
 
-use Gustavomendes\PrometheusLaravel\Controllers\MetricController;
-use Illuminate\Support\Facades\Route;
+/** @var $router Laravel\Lumen\Routing\Router  */
 
-Route::get('/metrics', MetricController::class);
+$router->get('/metrics', [
+    'as' => 'metrics', 'uses' => 'MetricController@tested'
+]);

@@ -15,7 +15,7 @@
     "minimum-stability": "stable",
     "require": {
         "promphp/prometheus_client_php": "^2.7",
-        "illuminate/routing": "^10.9",
-        "illuminate/support": "^10.9"
+        "illuminate/routing": "^9.0",
+        "illuminate/support": "^9.0"
     }
 }

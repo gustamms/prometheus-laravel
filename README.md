@@ -49,3 +49,35 @@ PROMETHEUS_REDIS_PERSISTENT_CONNECTIONS=0
 PROMETHEUS_REDIS_PREFIX=PROMETHEUS_
 PROMETHEUS_NAMESPACE=application_name
 ```
+
+## How use for personal metrics?
+
+```php
+use Gustavomendes\PrometheusLaravel\PrometheusCollector;
+
+class DoSomething 
+{
+    private $collector;
+    
+    public function __construct() {
+        $this->collector = new PrometheusCollector();
+    }
+    
+    public function do(){
+        $this->collector->getOrRegisterCounter(
+            env('PROMETHEUS_NAMESPACE'),
+            'do_method_use',
+            'Pass in Do method'
+        );
+        
+        $this->collector->getOrRegisterHistogram(
+            env('PROMETHEUS_NAMESPACE'),
+            'histogram_sample',
+            'Histogram are made',
+            1.2,
+            ['label1'],
+            ['labelvalue1']
+        );
+    }
+}
+```

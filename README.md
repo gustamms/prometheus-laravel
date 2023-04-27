@@ -29,12 +29,23 @@ In `bootstrap/app.php` add this register provider
 $app->register(\Gustavomendes\PrometheusLaravel\Providers\PrometheusServiceProvider::class);
 ```
 
+In `bootstrap/app.php` add this middleware
+```bash
+$app->middleware([
+    ...
+    \Gustavomendes\PrometheusLaravel\Middleware\PrometheusRouteMiddleware::class
+]);
+
+```
+
 In `.env` add and change the values of this lines 
 ```bash
+PROMETHEUS_STORAGE_ADAPTER=redis
 PROMETHEUS_REDIS_HOST=redis.zendesk-support.dev
 PROMETHEUS_REDIS_PORT=6379
 PROMETHEUS_REDIS_TIMEOUT=0.1
 PROMETHEUS_REDIS_READ_TIMEOUT=10
 PROMETHEUS_REDIS_PERSISTENT_CONNECTIONS=0
 PROMETHEUS_REDIS_PREFIX=PROMETHEUS_
+PROMETHEUS_NAMESPACE=application_name
 ```

@@ -14,7 +14,7 @@ class PrometheusRouteMiddleware
         $this->prometheusCollector = new PrometheusCollector();
 
         $this->prometheusCollector->getOrRegisterCounter(
-            'ms_zendesk_support',
+            env('PROMETHEUS_NAMESPACE', 'app'),
             'test_com_collector',
             'teste qualquer'
         );

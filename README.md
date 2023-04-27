@@ -14,3 +14,17 @@ After run this command
 ```bash
     composer require gustavomendes/prometheus-laravel
 ```
+
+Copy the `config/prometheus.php` to your laravel/lumen implementation
+
+https://github.com/gustamms/prometheus-laravel/blob/main/src/config/prometheus.php
+
+In `bootstrap/app.php` add this configure
+```bash
+$app->configure('prometheus');
+```
+
+In `bootstrap/app.php` add this register provider
+```bash
+$app->register(\Gustavomendes\PrometheusLaravel\Providers\PrometheusServiceProvider::class);
+```

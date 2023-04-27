@@ -22,7 +22,7 @@ class PrometheusRouteMiddleware
 
         $this->prometheusCollector->getOrRegisterCounter(
             env('PROMETHEUS_NAMESPACE', 'app'),
-            'request_made',
+            'request',
             'Request are made'
         );
 

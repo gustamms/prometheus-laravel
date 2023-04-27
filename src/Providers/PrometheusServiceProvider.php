@@ -25,6 +25,7 @@ class PrometheusServiceProvider extends ServiceProvider
         $isLumen = mb_strpos($this->app->version(), 'Lumen') !== false;
         if ($isLumen) {
             $router->get(
+                '/metrics',
                 [
                     'as' => 'metrics',
                     'uses' => MetricController::class . '@tested',

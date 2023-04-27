@@ -8,10 +8,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/promphp/prometheus_client_php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/inflector" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/fruitcake/php-cors" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/uri-template" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/illuminate/collections" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/illuminate/conditionable" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/illuminate/container" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/illuminate/contracts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/illuminate/filesystem" />
@@ -39,6 +36,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-normalizer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php72" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php73" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php80" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/routing" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/translation" />

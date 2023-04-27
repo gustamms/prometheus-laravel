@@ -2,10 +2,18 @@
 
 namespace Gustavomendes\PrometheusLaravel\Controllers;
 
+use Prometheus\RenderTextFormat;
+
 class MetricController
 {
-    public function tested(): string
+    public function getMetrics(): void
     {
-        return 'Hello World';
+        $registry = \Prometheus\CollectorRegistry::getDefault();
+
+        $renderer = new RenderTextFormat();
+        $result = $renderer->render($registry->getMetricFamilySamples());
+
+        header('Content-type: ' . RenderTextFormat::MIME_TYPE);
+        echo $result;
     }
 }

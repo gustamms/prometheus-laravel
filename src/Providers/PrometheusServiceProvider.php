@@ -28,12 +28,12 @@ class PrometheusServiceProvider extends ServiceProvider
                 '/metrics',
                 [
                     'as' => 'metrics',
-                    'uses' => MetricController::class . '@tested',
+                    'uses' => MetricController::class . '@getMetrics',
                 ]
             );
         } else {
             $router->get(
-                MetricController::class . '@tested'
+                MetricController::class . '@getMetrics'
             )->name('metrics');
         }
     }

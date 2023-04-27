@@ -13,7 +13,7 @@ class PrometheusRouteMiddleware
     private $prometheusCollector;
 
     private $except = [
-        'health', '/', '', 'api/v1/metrics'
+        'health', '/', '', '/metrics', 'api/metrics', 'metrics'
     ];
 
     /**

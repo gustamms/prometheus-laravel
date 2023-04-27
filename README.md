@@ -65,13 +65,11 @@ class DoSomething
     
     public function do(){
         $this->collector->getOrRegisterCounter(
-            env('PROMETHEUS_NAMESPACE'),
             'do_method_use',
             'Pass in Do method'
         );
         
         $this->collector->getOrRegisterHistogram(
-            env('PROMETHEUS_NAMESPACE'),
             'histogram_sample',
             'Histogram are made',
             1.2,

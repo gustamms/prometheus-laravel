@@ -14,7 +14,9 @@ class PrometheusServiceProvider extends ServiceProvider
             __DIR__ . '/../config/prometheus.php' => $this->configPath('prometheus.php'),
         ]);
         // $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
-        $this->loadRedis();
+        if (env('PROMETHEUS_STORAGE_ADAPTER', 'memory') == 'redis') {
+            $this->loadRedis();
+        }
         $this->loadRoutes();
     }
 

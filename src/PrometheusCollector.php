@@ -7,16 +7,18 @@ use Prometheus\Exception\MetricsRegistrationException;
 class PrometheusCollector
 {
     private $collector;
+    private $namespace;
+
     public function __construct()
     {
         $this->collector = \Prometheus\CollectorRegistry::getDefault();
+        $this->namespace = env('PROMETHEUS_NAMESPACE', 'app');
     }
 
     /**
      * @throws MetricsRegistrationException
      */
     public function getOrRegisterCounter(
-        string $namespace,
         string $name,
         string $help,
         array  $labels = [],
@@ -24,7 +26,7 @@ class PrometheusCollector
     )
     {
         $this->collector
-            ->getOrRegisterCounter($namespace, $name, $help, $labels)
+            ->getOrRegisterCounter($this->namespace, $name, $help, $labels)
             ->inc($labelsValues);
     }
 
@@ -32,7 +34,6 @@ class PrometheusCollector
      * @throws MetricsRegistrationException
      */
     public function getOrRegisterHistogram(
-        string $namespace,
         string $name,
         string $help,
         float $number,
@@ -42,7 +43,7 @@ class PrometheusCollector
     )
     {
         $this->collector
-            ->getOrRegisterHistogram($namespace, $name, $help, $labels, $buckets)
+            ->getOrRegisterHistogram($this->namespace, $name, $help, $labels, $buckets)
             ->observe($number, $labelsValues);
     }
 
@@ -50,7 +51,6 @@ class PrometheusCollector
      * @throws MetricsRegistrationException
      */
     public function getOrRegisterSummary(
-        string $namespace,
         string $name,
         string $help,
         int $number,
@@ -61,7 +61,7 @@ class PrometheusCollector
     )
     {
         $this->collector
-            ->getOrRegisterSummary($namespace, $name, $help, $labels, $maxAgeSeconds, $quantiles)
+            ->getOrRegisterSummary($this->namespace, $name, $help, $labels, $maxAgeSeconds, $quantiles)
             ->observe($number, $labelsValues);
     }
 }

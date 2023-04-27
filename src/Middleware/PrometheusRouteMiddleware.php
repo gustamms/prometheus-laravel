@@ -13,7 +13,7 @@ class PrometheusRouteMiddleware
     private $prometheusCollector;
 
     private $except = [
-        'health', '/', '', '/metrics', 'api/metrics', 'metrics', 'favicon.ico', '/documentation', 'docs'
+        'health', '/', '', '/metrics', 'api/metrics', 'metrics', 'favicon.ico', 'documentation', 'docs'
     ];
 
     /**
@@ -31,7 +31,6 @@ class PrometheusRouteMiddleware
         $duration = microtime(true) - $start;
 
         $this->prometheusCollector->getOrRegisterCounter(
-            env('PROMETHEUS_NAMESPACE', 'app'),
             'request',
             'Request are made',
             ['uri', 'method', 'statusCode'],
@@ -39,9 +38,8 @@ class PrometheusRouteMiddleware
         );
 
         $this->prometheusCollector->getOrRegisterHistogram(
-            env('PROMETHEUS_NAMESPACE', 'app'),
             'request_time',
-            'Request are made',
+            'Time request made',
             $duration,
             ['uri', 'method', 'statusCode'],
             [$request->getRequestUri(), $request->getMethod() ,$response->getStatusCode()]

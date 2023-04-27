@@ -23,9 +23,7 @@ class PrometheusRouteMiddleware
         $this->prometheusCollector->getOrRegisterCounter(
             env('PROMETHEUS_NAMESPACE', 'app'),
             'request_made',
-            'Request are made',
-            ['statusCode'],
-            [$response->getStatusCode()]
+            'Request are made'
         );
 
         return $response;

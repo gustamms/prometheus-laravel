@@ -12,11 +12,18 @@ class PrometheusRouteMiddleware
 {
     private $prometheusCollector;
 
+    private $except = [
+        'health', '/', '', 'api/v1/metrics'
+    ];
+
     /**
      * @throws MetricsRegistrationException
      */
     public function handle(Request $request, Closure $next)
     {
+        if (in_array($request->path(), $this->except)) {
+            return $next($request);
+        }
         $this->prometheusCollector = new PrometheusCollector();
 
         $response = $next($request);

@@ -27,4 +27,22 @@ class PrometheusCollector
             ->getOrRegisterCounter($namespace, $name, $help, $labels)
             ->inc($labelsValues);
     }
+
+    /**
+     * @throws MetricsRegistrationException
+     */
+    public function getOrRegisterHistogram(
+        string $namespace,
+        string $name,
+        string $help,
+        float $number,
+        array $labels = [],
+        array $labelsValues = [],
+        array $buckets = null
+    )
+    {
+        $this->collector
+            ->getOrRegisterHistogram($namespace, $name, $help, $labels, $buckets)
+            ->observe($number, $labelsValues);
+    }
 }

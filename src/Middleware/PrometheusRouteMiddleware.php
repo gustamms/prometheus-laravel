@@ -24,14 +24,25 @@ class PrometheusRouteMiddleware
         if (in_array($request->path(), $this->except)) {
             return $next($request);
         }
+        $start = microtime(true);
         $this->prometheusCollector = new PrometheusCollector();
 
         $response = $next($request);
+        $duration = microtime(true) - $start;
 
         $this->prometheusCollector->getOrRegisterCounter(
             env('PROMETHEUS_NAMESPACE', 'app'),
             'request',
             'Request are made',
+            ['uri', 'method', 'statusCode'],
+            [$request->getRequestUri(), $request->getMethod() ,$response->getStatusCode()]
+        );
+
+        $this->prometheusCollector->getOrRegisterHistogram(
+            env('PROMETHEUS_NAMESPACE', 'app'),
+            'request',
+            'Request are made',
+            $duration,
             ['uri', 'method', 'statusCode'],
             [$request->getRequestUri(), $request->getMethod() ,$response->getStatusCode()]
         );

@@ -5,6 +5,7 @@ namespace Gustavomendes\PrometheusLaravel\Providers;
 use Gustavomendes\PrometheusLaravel\Controllers\MetricController;
 use Illuminate\Routing\Route;
 use Illuminate\Support\ServiceProvider;
+use Prometheus\CollectorRegistry;
 
 class PrometheusServiceProvider extends ServiceProvider
 {
@@ -13,10 +14,13 @@ class PrometheusServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/prometheus.php' => $this->configPath('prometheus.php'),
         ]);
-        // $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
+
         if (env('PROMETHEUS_STORAGE_ADAPTER', 'memory') == 'redis') {
             $this->loadRedis();
         }
+
+        $this->app->alias(CollectorRegistry::class, 'prometheus');
+
         $this->loadRoutes();
     }
 

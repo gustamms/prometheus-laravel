@@ -3,7 +3,7 @@
 namespace Gustavomendes\PrometheusLaravel\Middleware;
 
 use Closure;
-use http\Client\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 class PrometheusRouteMiddleware
 {

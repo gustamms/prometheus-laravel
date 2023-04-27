@@ -15,10 +15,16 @@ class PrometheusCollector
     /**
      * @throws MetricsRegistrationException
      */
-    public function getOrRegisterCounter(string $namespace, string $name, string $help, $labels = [])
+    public function getOrRegisterCounter(
+        string $namespace,
+        string $name,
+        string $help,
+        array  $labels = [],
+        array  $labelsValues = []
+    )
     {
         $this->collector
             ->getOrRegisterCounter($namespace, $name, $help, $labels)
-            ->inc();
+            ->inc($labelsValues);
     }
 }

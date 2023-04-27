@@ -45,4 +45,23 @@ class PrometheusCollector
             ->getOrRegisterHistogram($namespace, $name, $help, $labels, $buckets)
             ->observe($number, $labelsValues);
     }
+
+    /**
+     * @throws MetricsRegistrationException
+     */
+    public function getOrRegisterSummary(
+        string $namespace,
+        string $name,
+        string $help,
+        int $number,
+        array $labels = [],
+        array $labelsValues = [],
+        int $maxAgeSeconds = 600,
+        array $quantiles = null
+    )
+    {
+        $this->collector
+            ->getOrRegisterSummary($namespace, $name, $help, $labels, $maxAgeSeconds, $quantiles)
+            ->observe($number, $labelsValues);
+    }
 }

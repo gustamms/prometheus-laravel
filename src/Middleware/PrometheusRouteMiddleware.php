@@ -40,7 +40,7 @@ class PrometheusRouteMiddleware
 
         $this->prometheusCollector->getOrRegisterHistogram(
             env('PROMETHEUS_NAMESPACE', 'app'),
-            'request',
+            'request_time',
             'Request are made',
             $duration,
             ['uri', 'method', 'statusCode'],

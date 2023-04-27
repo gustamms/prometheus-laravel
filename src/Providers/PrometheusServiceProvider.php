@@ -14,7 +14,22 @@ class PrometheusServiceProvider extends ServiceProvider
             __DIR__ . '/../config/prometheus.php' => $this->configPath('prometheus.php'),
         ]);
         // $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
+        $this->loadRedis();
         $this->loadRoutes();
+    }
+
+    private function loadRedis(): void
+    {
+        \Prometheus\Storage\Redis::setDefaultOptions(
+            [
+                'host' => env('PROMETHEUS_REDIS_HOST', '127.0.0.1'),
+                'port' => 6379,
+                'password' => null,
+                'timeout' => 0.1, // in seconds
+                'read_timeout' => '10', // in seconds
+                'persistent_connections' => false
+            ]
+        );
     }
 
     private function loadRoutes()

@@ -26,10 +26,19 @@ class PrometheusServiceProvider extends ServiceProvider
 
     private function loadRedis(): void
     {
+        $prometheus = config("prometheus.storage_adapters.redis");
+        $redisHost = $prometheus['host'];
+        $redisHost = explode(',', $redisHost);
+        $redisHosts = array_map('trim', $redisHost);
+
+        if (str_contains($redisHosts[0], ':')) {
+            $redisHosts = explode(':', $redisHost[0]);
+        }
+
         \Prometheus\Storage\Redis::setDefaultOptions(
             [
-                'host' => env('PROMETHEUS_REDIS_HOST', '127.0.0.1'),
-                'port' => 6379,
+                'host' => $redisHosts[0],
+                'port' => (int) $prometheus['port'],
                 'password' => null,
                 'timeout' => 0.1, // in seconds
                 'read_timeout' => '10', // in seconds

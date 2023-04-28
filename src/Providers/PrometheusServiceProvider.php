@@ -50,12 +50,13 @@ class PrometheusServiceProvider extends ServiceProvider
     private function loadRoutes()
     {
         $router = $this->app['router'];
+        $metricRoute = config('prometheus.metrics_route_path');
 
         /** @var Route $route */
         $isLumen = mb_strpos($this->app->version(), 'Lumen') !== false;
         if ($isLumen) {
             $router->get(
-                '/metrics',
+                '/' . $metricRoute,
                 [
                     'as' => 'metrics',
                     'uses' => MetricController::class . '@getMetrics',
@@ -63,6 +64,7 @@ class PrometheusServiceProvider extends ServiceProvider
             );
         } else {
             $router->get(
+                '/' . $metricRoute,
                 MetricController::class . '@getMetrics'
             )->name('metrics');
         }

@@ -12,7 +12,7 @@ class PrometheusCollector
     public function __construct()
     {
         $this->collector = \Prometheus\CollectorRegistry::getDefault();
-        $this->namespace = env('PROMETHEUS_NAMESPACE', 'app');
+        $this->namespace = config("prometheus.namespace");
     }
 
     /**

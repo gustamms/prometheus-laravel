@@ -1,6 +1,6 @@
 <?php
 
-namespace Gustavomendes\PrometheusLaravel;
+namespace Gustamms\PrometheusLaravel;
 
 use Prometheus\Exception\MetricsRegistrationException;
 

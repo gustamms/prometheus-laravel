@@ -1,8 +1,8 @@
 <?php
 
-namespace Gustavomendes\PrometheusLaravel\Providers;
+namespace Gustamms\PrometheusLaravel\Providers;
 
-use Gustavomendes\PrometheusLaravel\Controllers\MetricController;
+use Gustamms\PrometheusLaravel\Controllers\MetricController;
 use Illuminate\Routing\Route;
 use Illuminate\Support\ServiceProvider;
 use Prometheus\CollectorRegistry;

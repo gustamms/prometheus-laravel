@@ -1,12 +1,11 @@
 <?php
 
-namespace Gustavomendes\PrometheusLaravel\Middleware;
+namespace Gustamms\PrometheusLaravel\Middleware;
 
 use Closure;
-use Gustavomendes\PrometheusLaravel\PrometheusCollector;
+use Gustamms\PrometheusLaravel\PrometheusCollector;
 use Prometheus\Exception\MetricsRegistrationException;
 use Symfony\Component\HttpFoundation\Request;
-use Illuminate\Support\Facades\Route as RouteFacade;
 
 class PrometheusRouteMiddleware
 {

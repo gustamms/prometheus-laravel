@@ -1,6 +1,6 @@
 <?php
 
-namespace Gustavomendes\PrometheusLaravel\Controllers;
+namespace Gustamms\PrometheusLaravel\Controllers;
 
 use Prometheus\RenderTextFormat;
 

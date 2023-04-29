@@ -1,9 +1,9 @@
 {
-    "name": "gustavomendes/prometheus-laravel",
-    "description": "Lib for prometheus conector",
+    "name": "gustamms/prometheus-laravel",
+    "description": "Lib for prometheus connector",
     "autoload": {
         "psr-4": {
-            "Gustavomendes\\PrometheusLaravel\\": "src/"
+            "Gustamms\\PrometheusLaravel\\": "src/"
         }
     },
     "authors": [

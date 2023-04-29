@@ -12,7 +12,7 @@ Add this following repository in `composer.json` file
 
 After run this command
 ```bash
-    composer require gustavomendes/prometheus-laravel
+    composer require gustamms/prometheus-laravel
 ```
 
 Copy the `config/prometheus.php` to your laravel/lumen implementation
@@ -26,14 +26,14 @@ $app->configure('prometheus');
 
 In `bootstrap/app.php` add this register provider
 ```bash
-$app->register(\Gustavomendes\PrometheusLaravel\Providers\PrometheusServiceProvider::class);
+$app->register(\Gustamms\PrometheusLaravel\Providers\PrometheusServiceProvider::class);
 ```
 
 In `bootstrap/app.php` add this middleware
 ```bash
 $app->middleware([
     ...
-    \Gustavomendes\PrometheusLaravel\Middleware\PrometheusRouteMiddleware::class
+    \Gustamms\PrometheusLaravel\Middleware\PrometheusRouteMiddleware::class
 ]);
 
 ```
@@ -53,7 +53,7 @@ PROMETHEUS_NAMESPACE=application_name
 ## How use for personal metrics?
 
 ```php
-use Gustavomendes\PrometheusLaravel\PrometheusCollector;
+use Gustamms\PrometheusLaravel\PrometheusCollector;
 
 class DoSomething 
 {

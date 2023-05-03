@@ -1,6 +1,7 @@
 {
     "name": "gustamms/prometheus-laravel",
     "description": "Lib for prometheus connector",
+    "type": "project",
     "autoload": {
         "psr-4": {
             "Gustamms\\PrometheusLaravel\\": "src/"
@@ -12,7 +13,6 @@
             "email": "gustamms@hotmail.com"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
         "leandrogoncalves/prometheus_client_laravel": "^v1.0",
         "php": "^7.2.5 || ^8.0",
@@ -25,5 +25,13 @@
             "url": "https://github.com/leandrogoncalves/prometheus_client_laravel.git"
         }
     ],
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "platform-check": false
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "version": "v1.4.1"
 }

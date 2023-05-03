@@ -4,13 +4,15 @@ namespace Gustamms\PrometheusLaravel;
 
 use Prometheus\CollectorRegistry;
 use Prometheus\Exception\MetricsRegistrationException;
+use Prometheus\RegistryInterface;
 use Prometheus\RenderTextFormat;
+use Prometheus\Storage\APC;
 use Prometheus\Storage\InMemory;
 use Exception;
 
 class PrometheusCollector
 {
-    private $collector;
+    private RegistryInterface $collector;
     private $namespace;
 
     public function __construct()
@@ -26,6 +28,9 @@ class PrometheusCollector
                 break;
             case 'memory':
                 $this->collector = new CollectorRegistry(new InMemory());
+                break;
+            case 'apc':
+                $this->collector = new CollectorRegistry(new APC());
                 break;
         }
 

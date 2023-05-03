@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gustamms\PrometheusLaravel\Override\Promphp\Prometheus_client_php\src\Prometheus\Storage;
+namespace Prometheus\Storage;
 
 use InvalidArgumentException;
 use Prometheus\Counter;

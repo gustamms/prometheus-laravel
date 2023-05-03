@@ -2,7 +2,10 @@
 
 namespace Gustamms\PrometheusLaravel;
 
+use Prometheus\CollectorRegistry;
 use Prometheus\Exception\MetricsRegistrationException;
+use Prometheus\Storage\InMemory;
+use Exception;
 
 class PrometheusCollector
 {
@@ -11,7 +14,20 @@ class PrometheusCollector
 
     public function __construct()
     {
-        $this->collector = \Prometheus\CollectorRegistry::getDefault();
+        $storageAdapter = env('PROMETHEUS_STORAGE_ADAPTER');
+        if (!$storageAdapter)  {
+            throw new Exception('Variável PROMETHEUS_STORAGE_ADAPTER não informada');
+        }
+
+        switch ($storageAdapter) {
+            case 'redis':
+                $this->collector = \Prometheus\CollectorRegistry::getDefault();
+                break;
+            case 'memory':
+                $this->collector = new CollectorRegistry(new InMemory());
+                break;
+        }
+
         $this->namespace = config("prometheus.namespace");
     }
 

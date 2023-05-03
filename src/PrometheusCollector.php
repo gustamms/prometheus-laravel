@@ -4,6 +4,7 @@ namespace Gustamms\PrometheusLaravel;
 
 use Prometheus\CollectorRegistry;
 use Prometheus\Exception\MetricsRegistrationException;
+use Prometheus\RenderTextFormat;
 use Prometheus\Storage\InMemory;
 use Exception;
 
@@ -29,6 +30,17 @@ class PrometheusCollector
         }
 
         $this->namespace = config("prometheus.namespace");
+    }
+
+    public function renderMetrics()
+    {
+        $registry = $this->collector;
+
+        $renderer = new RenderTextFormat();
+        $result = $renderer->render($registry->getMetricFamilySamples());
+
+        header('Content-type: ' . RenderTextFormat::MIME_TYPE);
+        echo $result;
     }
 
     /**

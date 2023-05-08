@@ -25,5 +25,5 @@
         "platform-check": false
     },
     "prefer-stable": false,
-    "version": "v1.5"
+    "version": "v1.5.1"
 }

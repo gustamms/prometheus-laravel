@@ -15,7 +15,7 @@ class PrometheusServiceProvider extends ServiceProvider
             __DIR__ . '/../config/prometheus.php' => $this->configPath('prometheus.php'),
         ]);
 
-        if (env('PROMETHEUS_STORAGE_ADAPTER', 'memory') == 'redis') {
+        if (env('PROMETHEUS_STORAGE_ADAPTER', 'apc') == 'redis') {
             $this->loadRedis();
         }
 

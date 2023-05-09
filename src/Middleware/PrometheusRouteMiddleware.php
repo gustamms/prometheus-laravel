@@ -47,7 +47,7 @@ class PrometheusRouteMiddleware
         $labels = [
             'uri' => $path,
             'method' => $request->getMethod(),
-            'statusCode' => $response->getStatusCode()
+            'statusCode' => (string)$response->getStatusCode()
         ];
 
         Counter::add(

@@ -50,7 +50,7 @@ return [
     |
     */
 
-    'storage_adapter' => env('PROMETHEUS_STORAGE_ADAPTER', 'redis'),
+    'storage_adapter' => env('PROMETHEUS_STORAGE_ADAPTER', 'apc'),
 
     /*
     |--------------------------------------------------------------------------

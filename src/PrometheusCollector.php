@@ -2,66 +2,58 @@
 
 namespace Gustamms\PrometheusLaravel;
 
-use Prometheus\Exception\MetricsRegistrationException;
+use Prometheus\CollectorRegistry;
+use Prometheus\RegistryInterface;
+use Prometheus\RenderTextFormat;
+use Prometheus\Storage\APCng;
+use Prometheus\Storage\InMemory;
+use Exception;
 
 class PrometheusCollector
 {
-    private $collector;
+    private RegistryInterface $collector;
     private $namespace;
 
     public function __construct()
     {
-        $this->collector = \Prometheus\CollectorRegistry::getDefault();
+        $storageAdapter = env('PROMETHEUS_STORAGE_ADAPTER');
+        if (!$storageAdapter)  {
+            throw new Exception('Variável PROMETHEUS_STORAGE_ADAPTER não informada');
+        }
+
+        switch ($storageAdapter) {
+            case 'redis':
+                $this->collector = \Prometheus\CollectorRegistry::getDefault();
+                break;
+            case 'memory':
+                $this->collector = new CollectorRegistry(new InMemory());
+                break;
+            case 'apc':
+                $this->collector = new CollectorRegistry(new APCng());
+                break;
+        }
+
         $this->namespace = config("prometheus.namespace");
     }
 
-    /**
-     * @throws MetricsRegistrationException
-     */
-    public function getOrRegisterCounter(
-        string $name,
-        string $help,
-        array  $labels = [],
-        array  $labelsValues = []
-    )
+    public function getMetrics()
     {
-        $this->collector
-            ->getOrRegisterCounter($this->namespace, $name, $help, $labels)
-            ->inc($labelsValues);
+        return (new RenderTextFormat())->render($this->collector->getMetricFamilySamples());
     }
 
     /**
-     * @throws MetricsRegistrationException
+     * @return CollectorRegistry|RegistryInterface
      */
-    public function getOrRegisterHistogram(
-        string $name,
-        string $help,
-        float $number,
-        array $labels = [],
-        array $labelsValues = [],
-        array $buckets = null
-    )
+    public function getCollector(): RegistryInterface|CollectorRegistry
     {
-        $this->collector
-            ->getOrRegisterHistogram($this->namespace, $name, $help, $labels, $buckets)
-            ->observe($number, $labelsValues);
+        return $this->collector;
     }
 
     /**
-     * @throws MetricsRegistrationException
+     * @return string
      */
-    public function getOrRegisterSummary(
-        string $name,
-        string $help,
-        int $number,
-        array $labels = [],
-        array $labelsValues = [],
-        int $maxAgeSeconds = 600,
-        array $quantiles = null
-    )
+    public function getNamespace(): string
     {
-        $this->collector
-            ->getOrRegisterSummary($this->namespace, $name, $help, $labels, $maxAgeSeconds, $quantiles)
-            ->observe($number, $labelsValues);
+        return $this->namespace;
     }
 }

@@ -2,18 +2,20 @@
 
 namespace Gustamms\PrometheusLaravel\Controllers;
 
+use Gustamms\PrometheusLaravel\PrometheusCollector;
+use Illuminate\Http\Response;
 use Prometheus\RenderTextFormat;
 
 class MetricController
 {
-    public function getMetrics(): void
+    public function getMetrics(): Response
     {
-        $registry = \Prometheus\CollectorRegistry::getDefault();
-
-        $renderer = new RenderTextFormat();
-        $result = $renderer->render($registry->getMetricFamilySamples());
-
-        header('Content-type: ' . RenderTextFormat::MIME_TYPE);
-        echo $result;
+        return response(
+            (new PrometheusCollector())->getMetrics(),
+            200,
+            [
+                'Content-Type' => RenderTextFormat::MIME_TYPE,
+            ]
+        );
     }
 }

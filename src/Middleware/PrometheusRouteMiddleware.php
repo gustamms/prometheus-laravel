@@ -3,6 +3,8 @@
 namespace Gustamms\PrometheusLaravel\Middleware;
 
 use Closure;
+use Gustamms\PrometheusLaravel\Metrics\Counter;
+use Gustamms\PrometheusLaravel\Metrics\Histogram;
 use Gustamms\PrometheusLaravel\PrometheusCollector;
 use Prometheus\Exception\MetricsRegistrationException;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,8 +26,6 @@ class PrometheusRouteMiddleware
             return $next($request);
         }
         $start = microtime(true);
-        $this->prometheusCollector = new PrometheusCollector();
-
         $response = $next($request);
         $duration = microtime(true) - $start;
 
@@ -44,19 +44,24 @@ class PrometheusRouteMiddleware
             }
         }
 
-        $this->prometheusCollector->getOrRegisterCounter(
+        $labels = [
+            'uri' => $path,
+            'method' => $request->getMethod(),
+            'statusCode' => (string)$response->getStatusCode()
+        ];
+
+        Counter::add(
+            1,
             'request',
-            'Request are made',
-            ['uri', 'method', 'statusCode'],
-            [$path, $request->getMethod() ,$response->getStatusCode()]
+            $labels,
+            'Request are made'
         );
 
-        $this->prometheusCollector->getOrRegisterHistogram(
-            'request_time',
-            'Time request made',
+        Histogram::record(
             $duration,
-            ['uri', 'method', 'statusCode'],
-            [$path, $request->getMethod() ,$response->getStatusCode()]
+            'request_time',
+            $labels,
+            'Time request made'
         );
 
         return $response;

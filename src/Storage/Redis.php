@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Prometheus\Storage;
 
 use InvalidArgumentException;
-use Predis\Client;
 use Prometheus\Counter;
 use Prometheus\Exception\StorageException;
 use Prometheus\Gauge;
@@ -14,7 +13,7 @@ use Prometheus\Math;
 use Prometheus\MetricFamilySamples;
 use Prometheus\Summary;
 use RuntimeException;
-use Predis;
+use Illuminate\Support\Facades\Redis as RedisClient;
 
 class Redis implements Adapter
 {
@@ -58,7 +57,7 @@ class Redis implements Adapter
      * @param Client $redis
      * @param array $options
      */
-    public function __construct(Predis\Client $redis, array $options = [])
+    public function __construct(RedisClient $redis, array $options = [])
     {
         $this->options = array_merge(self::$defaultOptions, $options);
         $this->redis = $redis;
@@ -69,7 +68,7 @@ class Redis implements Adapter
      * @return self
      * @throws StorageException
      */
-    public static function fromExistingConnection(Predis\Client $redis): self
+    public static function fromExistingConnection(RedisClient $redis): self
     {
         if ($redis->isConnected() === false) {
             throw new StorageException('Connection to Redis server not established');
@@ -278,7 +277,7 @@ LUA
 
     /**
      * @param mixed[] $data
-     * @throws StorageException
+     * @throws StorageException|\RedisException
      */
     public function updateSummary(array $data): void
     {

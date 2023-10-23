@@ -15,11 +15,10 @@
     ],
     "require": {
         "php": "^7.2.5 || ^8.0",
-        "illuminate/redis": "^9.52",
+        "illuminate/redis": "^8.81",
         "illuminate/routing": "^6.0 || ^7.0 || ^8.0 || ^9.0",
         "illuminate/support": "^6.0 || ^7.0 || ^8.0 || ^9.0",
-        "promphp/prometheus_client_php": "^2.7.1",
-        "ext-redis": "*"
+        "promphp/prometheus_client_php": "^2.7.1"
     },
     "config": {
         "sort-packages": true,

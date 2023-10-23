@@ -24,7 +24,18 @@ class PrometheusCollector
 
         switch ($storageAdapter) {
             case 'redis':
-                $this->collector = new CollectorRegistry(new \Prometheus\Storage\Redis(new Client()));
+                $this->collector = new CollectorRegistry(
+                    new \Prometheus\Storage\Redis(
+                        [
+                            'scheme' => 'tcp',
+                            'host' => env('PROMETHEUS_REDIS_HOST'),
+                            'port' => env('PROMETHEUS_REDIS_PORT'),
+                            'password' => env('REDIS_PASSWORD', ''),
+                            'database' => env('REDIS_DB', 0),
+                            'read_write_timeout' => env('PROMETHEUS_REDIS_READ_TIMEOUT'),
+                        ]
+                    )
+                );
                 break;
             case 'memory':
                 $this->collector = new CollectorRegistry(new InMemory());

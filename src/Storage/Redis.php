@@ -57,10 +57,10 @@ class Redis implements Adapter
      * @param Client $redis
      * @param array $options
      */
-    public function __construct(RedisClient $redis, array $options = [])
+    public function __construct(array $options = [])
     {
         $this->options = array_merge(self::$defaultOptions, $options);
-        $this->redis = $redis;
+        $this->redis = new RedisClient();
     }
 
     /**

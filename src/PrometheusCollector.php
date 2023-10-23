@@ -2,6 +2,7 @@
 
 namespace Gustamms\PrometheusLaravel;
 
+use Illuminate\Redis\RedisManager;
 use Predis\Client;
 use Prometheus\CollectorRegistry;
 use Prometheus\RegistryInterface;
@@ -9,6 +10,7 @@ use Prometheus\RenderTextFormat;
 use Prometheus\Storage\APCng;
 use Prometheus\Storage\InMemory;
 use Exception;
+use Prometheus\Storage\Redis;
 
 class PrometheusCollector
 {
@@ -24,20 +26,7 @@ class PrometheusCollector
 
         switch ($storageAdapter) {
             case 'redis':
-                $this->collector = new CollectorRegistry(
-                    new \Prometheus\Storage\Redis(
-                        [
-                            'client' => 'phpredis',
-                            'cluster' => true,
-                            'default' => [
-                                'host' => env('PROMETHEUS_REDIS_HOST'),
-                                'port' => env('PROMETHEUS_REDIS_PORT'),
-                                'database' => 0,
-                                'read_timeout' => 60,
-                            ]
-                        ]
-                    )
-                );
+                $this->collector = new CollectorRegistry(new Redis());
                 break;
             case 'memory':
                 $this->collector = new CollectorRegistry(new InMemory());

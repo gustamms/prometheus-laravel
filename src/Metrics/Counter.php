@@ -26,7 +26,7 @@ class Counter
         $registry = (new PrometheusCollector())->getCollector();
         $registry->getOrRegisterCounter(
                 $namespace,
-                $name,
+                env('PROMETHEUS_NAMESPACE') . $name,
                 $description,
                 $labelsKeys
             )

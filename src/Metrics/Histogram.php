@@ -23,7 +23,7 @@ class Histogram
         $registry = (new PrometheusCollector())->getCollector();
         $registry->getOrRegisterHistogram(
                 $namespace,
-                $name,
+                env('PROMETHEUS_NAMESPACE') . $name,
                 $description,
                 $labelsKeys
             )

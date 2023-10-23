@@ -20,7 +20,7 @@ class Gauge
         $labelsValues = array_values($labels);
 
         $registry = (new PrometheusCollector())->getCollector();
-        $registry->getOrRegisterGauge($namespace, $name, $description, $labelsKeys)
+        $registry->getOrRegisterGauge($namespace, env('PROMETHEUS_NAMESPACE') . $name, $description, $labelsKeys)
             ->incBy($amount, $labelsValues);
     }
 }

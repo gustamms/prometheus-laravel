@@ -2,6 +2,7 @@
 
 namespace Gustamms\PrometheusLaravel;
 
+use Predis\Client;
 use Prometheus\CollectorRegistry;
 use Prometheus\RegistryInterface;
 use Prometheus\RenderTextFormat;
@@ -23,7 +24,7 @@ class PrometheusCollector
 
         switch ($storageAdapter) {
             case 'redis':
-                $this->collector = \Prometheus\CollectorRegistry::getDefault();
+                $this->collector = new CollectorRegistry(new \Prometheus\Storage\Redis(new Client()));
                 break;
             case 'memory':
                 $this->collector = new CollectorRegistry(new InMemory());

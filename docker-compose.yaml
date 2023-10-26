@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: prom_app
+    restart: always
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: tail -f /dev/null
+    environment:
+      - "COMPOSER_ALLOW_SUPERUSER=1"

@@ -2,6 +2,7 @@
 
 namespace Gustamms\PrometheusLaravel;
 
+use Gustamms\PrometheusLaravel\Adapters\RedisClusterAdapter;
 use Prometheus\CollectorRegistry;
 use Prometheus\RegistryInterface;
 use Prometheus\RenderTextFormat;
@@ -17,13 +18,22 @@ class PrometheusCollector
     public function __construct()
     {
         $storageAdapter = env('PROMETHEUS_STORAGE_ADAPTER');
-        if (!$storageAdapter)  {
+        if (!$storageAdapter) {
             throw new Exception('Variável PROMETHEUS_STORAGE_ADAPTER não informada');
         }
 
         switch ($storageAdapter) {
             case 'redis':
-                $this->collector = \Prometheus\CollectorRegistry::getDefault();
+                $this->collector = CollectorRegistry::getDefault();
+                break;
+            case 'redis-cluster':
+                $redisClusterServers = explode(',', env('REDIS_CLUSTER_SERVERS'));
+                if (!$redisClusterServers) {
+                    throw new Exception('Variável REDIS_CLUSTER_SERVERS não informada ou mal formatada');
+                }
+
+                $adapter = new RedisClusterAdapter($redisClusterServers);
+                $this->collector = new CollectorRegistry($adapter);
                 break;
             case 'memory':
                 $this->collector = new CollectorRegistry(new InMemory());
@@ -31,10 +41,13 @@ class PrometheusCollector
             case 'apc':
                 $this->collector = new CollectorRegistry(new APCng());
                 break;
+            default:
+                throw new Exception("Adaptador de armazenamento $storageAdapter não suportado");
         }
 
         $this->namespace = config("prometheus.namespace");
     }
+
 
     public function getMetrics()
     {

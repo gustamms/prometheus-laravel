@@ -55,9 +55,9 @@ class PrometheusCollector
     }
 
     /**
-     * @return CollectorRegistry|RegistryInterface
+     * @return RegistryInterface
      */
-    public function getCollector(): RegistryInterface|CollectorRegistry
+    public function getCollector(): RegistryInterface
     {
         return $this->collector;
     }
